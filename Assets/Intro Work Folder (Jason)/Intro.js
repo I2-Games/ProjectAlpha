@@ -2,16 +2,18 @@
 
 var introMusic : GameObject;
 var introVoiceOver : GameObject;
-var blackScreen : Texture2D;
 var image_1 : Texture2D;
+var image_2 : Texture2D;
 
 
 function Start () {
 	
 	//Use the yields to setup timing for images, fades, etc.
 	introMusic.SetActive(true);
-	yield WaitForSeconds(5);
+	yield WaitForSeconds(4.5);
 	introVoiceOver.SetActive(true);
+	yield WaitForSeconds(1.0);
+	image_1 = image_2;
 	yield WaitForSeconds(10);
 	gameObject.SetActive(false);
 
