@@ -8,21 +8,23 @@ public class PlayerController : MonoBehaviour
 	public float playerSpeed;
 	public float playerJump;
 	float moveVelocity;         //Not putting private or public defaults to making variable private
-
+	float spriteBottom;
 	//Grounding Vars
-	bool grounded = true;
 
+	void Start(){
+		spriteBottom = GetComponent<Collider>().bounds.extents.y;
+	}
 	void Update () 
 	{
 		//Jumping
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			if (grounded)
+			if (isGrounded())
 			{
 				GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x , playerJump);
 			}
 		}
-
+		//I feel like this line of code may make the movement seem forced? Non fluid movement
 		moveVelocity = 0;
 
 		//Left Right Movement
@@ -38,14 +40,7 @@ public class PlayerController : MonoBehaviour
 		GetComponent<Rigidbody2D> ().velocity = new Vector2 (moveVelocity, GetComponent<Rigidbody2D> ().velocity.y);
 	}
 
-	//Check if Grounded
-	void OnTriggerEnter2D()
-	{
-		grounded = true;
-	}
-
-	void OnTriggerExit2D()
-	{
-		grounded = false;
+	bool isGrounded(){
+		return Physics.Raycast(transform.position,Vector3.down, spriteBottom + 0.1f);
 	}
 }
